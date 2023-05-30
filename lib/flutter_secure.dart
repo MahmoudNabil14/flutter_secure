@@ -1,7 +1,7 @@
-import 'flutter_secure_platform_interface.dart';
+import 'package:flutter_secure/src/platform_api.dart';
 
 class FlutterSecure {
-  Future<String?> getPlatformVersion() {
-    return FlutterSecurePlatform.instance.getPlatformVersion();
-  }
+  final FlutterSecurePlatformAPI _platformAPI = FlutterSecurePlatformAPI();
+
+  FlutterSecure();
 }
