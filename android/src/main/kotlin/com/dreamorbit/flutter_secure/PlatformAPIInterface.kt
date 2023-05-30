@@ -45,16 +45,33 @@ class FlutterError(
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface FlutterSecurePlatformAPI {
+  fun isRooted(): Boolean
 
   companion object {
     /** The codec used by FlutterSecurePlatformAPI. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-
     /** Sets up an instance of `FlutterSecurePlatformAPI` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: FlutterSecurePlatformAPI?) {
+      run {
+        val channel =
+          BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.FlutterSecurePlatformAPI.isRooted", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.isRooted())
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
     }
   }
 }

@@ -8,6 +8,14 @@
 #error File requires ARC to be enabled.
 #endif
 
+static NSArray *wrapResult(id result, FlutterError *error) {
+  if (error) {
+    return @[
+      error.code ?: [NSNull null], error.message ?: [NSNull null], error.details ?: [NSNull null]
+    ];
+  }
+  return @[ result ?: [NSNull null] ];
+}
 static id GetNullableObjectAtIndex(NSArray *array, NSInteger key) {
   id result = array[key];
   return (result == [NSNull null]) ? nil : result;
@@ -20,4 +28,21 @@ NSObject<FlutterMessageCodec> *FlutterSecurePlatformAPIGetCodec(void) {
 }
 
 void FlutterSecurePlatformAPISetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<FlutterSecurePlatformAPI> *api) {
+  {
+    FlutterBasicMessageChannel *channel =
+      [[FlutterBasicMessageChannel alloc]
+        initWithName:@"dev.flutter.pigeon.FlutterSecurePlatformAPI.isRooted"
+        binaryMessenger:binaryMessenger
+        codec:FlutterSecurePlatformAPIGetCodec()];
+    if (api) {
+      NSCAssert([api respondsToSelector:@selector(isRootedWithError:)], @"FlutterSecurePlatformAPI api (%@) doesn't respond to @selector(isRootedWithError:)", api);
+      [channel setMessageHandler:^(id _Nullable message, FlutterReply callback) {
+        FlutterError *error;
+        NSNumber *output = [api isRootedWithError:&error];
+        callback(wrapResult(output, error));
+      }];
+    } else {
+      [channel setMessageHandler:nil];
+    }
+  }
 }

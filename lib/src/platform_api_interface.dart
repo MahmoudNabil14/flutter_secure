@@ -1,4 +1,6 @@
 import 'package:pigeon/pigeon.dart';
 
 @HostApi()
-abstract class FlutterSecurePlatformAPI {}
+abstract class FlutterSecurePlatformAPI {
+  bool isRooted();
+}

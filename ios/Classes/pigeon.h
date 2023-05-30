@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 NSObject<FlutterMessageCodec> *FlutterSecurePlatformAPIGetCodec(void);
 
 @protocol FlutterSecurePlatformAPI
+/// @return `nil` only when `error != nil`.
+- (nullable NSNumber *)isRootedWithError:(FlutterError *_Nullable *_Nonnull)error;
 @end
 
 extern void FlutterSecurePlatformAPISetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<FlutterSecurePlatformAPI> *_Nullable api);

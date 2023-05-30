@@ -1,7 +1,13 @@
 import Flutter
 import UIKit
+import DTTJailbreakDetection
 
 public class SwiftFlutterSecurePlugin: NSObject, FlutterPlugin, FlutterSecurePlatformAPI {
+    
+    func isRooted() throws -> Bool {
+        return DTTJailbreakDetection.isJailbroken()
+    }
+    
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         

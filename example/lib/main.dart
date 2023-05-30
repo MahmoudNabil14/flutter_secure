@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure/flutter_secure.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +25,19 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: const Center(
-          child: Text('Awesome stuff coming soon'),
+        body: Center(
+          child: FutureBuilder<bool>(
+            future: FlutterSecure().isRooted,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Text('isRooted: ${snapshot.data}');
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return const Text('Loading...');
+              }
+            },
+          ),
         ),
       ),
     );
