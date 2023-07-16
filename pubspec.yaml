@@ -18,6 +18,9 @@ dependencies:
   http: any
   dio: ^5.1.2
 
+  # Storage
+  flutter_secure_storage: ^8.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
