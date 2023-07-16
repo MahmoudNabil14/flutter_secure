@@ -7,6 +7,15 @@ class SSLPinningInterceptor extends Interceptor {
 
   SSLPinningInterceptor(this.trustedCertificates);
 
+  /// Creates a [SSLPinningInterceptor] from a list of Certificates files in PEM Format.
+  factory SSLPinningInterceptor.fromCertFiles(List<File> pemFiles) {
+    final List<String> trustedCertificates = [];
+    for (var pemFile in pemFiles) {
+      trustedCertificates.add(pemFile.readAsStringSync());
+    }
+    return SSLPinningInterceptor(trustedCertificates);
+  }
+
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
