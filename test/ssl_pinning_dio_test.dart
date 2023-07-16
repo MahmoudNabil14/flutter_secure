@@ -46,7 +46,7 @@ WRhOiYq0rqjzgLQ=
           var call = await dio.get('https://www.google.com');
           expect(call, isA<Response>());
           expect(call.statusCode, 200);
-        } on DioError catch (e) {
+        } on DioException catch (e) {
           if (e.error is TlsException) {
             fail(
                 'It throws TlsException even if certificate is added for host');
@@ -64,7 +64,7 @@ WRhOiYq0rqjzgLQ=
           await dio.get('https://www.facebook.com');
           fail('It does not throw TlsException');
         } catch (e) {
-          if (e is DioError) {
+          if (e is DioException) {
             expect(e.error, isA<TlsException>());
           } else {
             fail('$e');

@@ -26,7 +26,7 @@ class SSLPinningInterceptor extends Interceptor {
 
       if (!matchingCertificates) {
         // No matching certificates found, reject the request
-        throw DioError(
+        throw DioException(
           error: const TlsException('SSL pinning validation failed.'),
           requestOptions: options,
         );
@@ -35,10 +35,10 @@ class SSLPinningInterceptor extends Interceptor {
       // Move to the next interceptor or proceed with the network request
       handler.next(options);
     } catch (e) {
-      if (e is DioError) {
+      if (e is DioException) {
         handler.reject(e);
       } else {
-        handler.reject(DioError(requestOptions: options, error: e));
+        handler.reject(DioException(requestOptions: options, error: e));
       }
     }
   }
