@@ -1,6 +1,8 @@
-# flutter_security
+# flutter_secure
 
-The `flutter_security` library is a comprehensive Flutter package that offers various security-related functionalities for Flutter Applications. It provides developers with tools to enhance the security of their Flutter apps by detecting root access, implementing SSL pinning, securing key-value storage, detecting fake locations, detecting fake devices, and detecting app tampering. These features collectively contribute to a more robust and secure application environment, safeguarding user data and ensuring the integrity of the app's execution.
+![drawing](https://raw.githubusercontent.com/Dream-Orbit/flutter_secure/dev/assets/header_banner.png)
+
+The `flutter_secure` library is a comprehensive Flutter package that offers various security-related functionalities for Flutter Applications. It provides developers with tools to enhance the security of their Flutter apps by detecting root access, implementing SSL pinning, securing key-value storage, detecting fake locations, detecting fake devices, and detecting app tampering. These features collectively contribute to a more robust and secure application environment, safeguarding user data and ensuring the integrity of the app's execution.
 
 ## Installation
 
@@ -8,7 +10,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-   flutter_security: ^1.0.0
+   flutter_secure: ^1.0.1
 ```
 
 ## Platform Setup
@@ -140,14 +142,14 @@ your requests in a `try-catch` block.
 
 Dio Interceptor usage example:
 ```dart
-try {  
-  var call = await dio.get('https://dreamorbit.com/');
-} on DioException catch (e) {  
-  if (e.error is TlsException) {  
-    // Recieved certificate is different from trusted certificates
-  } else {  
-    // Some other exception
-  }  
+try {
+var call = await dio.get('https://dreamorbit.com/');
+} on DioException catch (e) {
+if (e.error is TlsException) {
+// Recieved certificate is different from trusted certificates
+} else {
+// Some other exception
+}
 }
 ```
 
